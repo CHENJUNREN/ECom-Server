@@ -1,0 +1,39 @@
+.btn {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/* Boostrap Buttons Styling */
+.btn-primary {
+    font-size: 13px;
+    color: rgba(58, 133, 191, 0.75);
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid rgba(58, 133, 191, 0.75);
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+
+.btn-primary:hover {
+    color: #FFF;
+    background: rgba(58, 133, 191, 0.75);
+    border: 2px solid rgba(58, 133, 191, 0.75);
+}
+
+.btn-success {
+    font-size: 13px;
+    color: rgba(103, 192, 103, 0.75);
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid rgba(103, 192, 103, 0.75);
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+
+.btn-success:hover {
+    color: #FFF;
+    background: rgb(103, 192, 103, 0.75);
+    border: 2px solid rgb(103, 192, 103, 0.75);
+}

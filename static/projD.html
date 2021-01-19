@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Project D</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+    <script src="./bootstrap/jquery-3.3.1.slim.min.js"></script>
+    <script src="./bootstrap/popper.min.js"></script>
+    <script src="./bootstrap/bootstrap.min.js"></script>
+    <script src='./bootstrap/icons.js'></script>
+    <link rel="StyleSheet" href="projD.css" type="text/css" />
+    <script type="text/javascript" src="projD.js"></script>
+</head>
+
+<body onload="javascript:show('catalogView');">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex">
+        <a class="navbar-brand font-weight-lighter" href="#" onclick="javascript:show('catalogView');">
+            <i class='fas fa-car-side'></i> Store</a>
+        <div class="ml-auto">
+            <button type="button" id="backButton" class="btn btn-primary" onclick="javascript:back();">
+                Back
+            </button>
+            <button type="button" id="cartButton" class="btn btn-primary" onclick="javascript:show('cartView');">
+                Cart <span class="badge badge-pill badge-danger" id="itemCount">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container view" id="catalogView">
+        <h2 class="font-weight-lighter my-3 ml-1">Catalog</h2>
+        <div class="list-group" id="catalogList">
+        </div>
+    </div>
+
+    <div class="container view" id="categoryView">
+        <h2 class="font-weight-lighter my-3 ml-1" id="categoryTitle"></h2>
+        <div class="list-group" id="categoryList">
+        </div>
+    </div>
+
+    <div class="container view" id="productView">
+        <h2 class="font-weight-lighter my-3 ml-1" id="productTitle">Product</h2>
+        <div id="productInfo" class="card">
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary mt-2" onclick="javascript:addToCart();">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+    <div class="container view" id="cartView">
+        <h2 class="font-weight-lighter my-3 ml-1 mb-4">Shopping Cart</h2>
+        <h1 class="font-weight-lighter my-3 ml-1 mt-4" id="emptyTitle">Your Cart is Empty...</h1>
+        <div id="cartSection">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <!-- <th scope="col">PID</th> -->
+                        <th scope="col">Item</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTable"></tbody>
+            </table>
+            <div class="d-flex justify-content-end">
+                <h4 class="font-weight-lighter my-3 mr-2 mt-2">Subtotal: <span id="subtotal"></span></h4>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
