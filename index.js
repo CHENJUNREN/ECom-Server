@@ -1,4 +1,4 @@
-const port = 65000;
+const port = process.env.PORT || 5000;
 // const home = require('os').homedir;
 // const DB_PATH = home + '/4413/pkg/sqlite/Models_R_US.db';
 const DB_PATH = "./sqlite/Models_R_US.db";
