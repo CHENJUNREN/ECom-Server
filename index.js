@@ -1,18 +1,16 @@
+const net = require("net");
+const https = require("https");
+const express = require("express");
+const session = require("express-session");
+const sqlite3 = require("sqlite3").verbose();
+
+const app = express();
+const db = new sqlite3.Database(DB_PATH);
 const port = process.env.PORT || 5000;
 // const home = require('os').homedir;
 // const DB_PATH = home + '/4413/pkg/sqlite/Models_R_US.db';
 const DB_PATH = "./sqlite/Models_R_US.db";
 const GCP_KEY = "AIzaSyBKfzDUkQK111j6lj1UV_fgAEV64IKSxdA";
-
-const net = require("net");
-const https = require("https");
-const express = require("express");
-const session = require("express-session");
-
-var app = express();
-var sqlite3 = require("sqlite3").verbose();
-var db = new sqlite3.Database(DB_PATH);
-app.enable("trust proxy");
 
 // Testing middleware for url mapping route:  http://host:port/Test?x=123
 app.use("/Test", function (req, res) {
@@ -23,12 +21,20 @@ app.use("/Test", function (req, res) {
 	res.end("You sent me: " + req.query.x);
 });
 
+app.set("trust proxy", 1);
+// app.enable("trust proxy");
 app.use(
+	// session({
+	// 	secret: "mine",
+	// 	proxy: true,
+	// 	resave: true,
+	// 	saveUninitialized: true,
+	// })
 	session({
 		secret: "mine",
-		proxy: true,
-		resave: true,
+		resave: false,
 		saveUninitialized: true,
+		cookie: { secure: true },
 	})
 );
 
@@ -246,7 +252,7 @@ app.use("/Trip", function (req, res) {
 
 // --------------------------------------- ProjD ---------------------------------------
 
-app.use("/Static", express.static("./static"));
+app.use("/static", express.static("./static"));
 
 app.use("/List", (req, res) => {
 	let id = req.query.id;
