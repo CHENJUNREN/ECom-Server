@@ -3,7 +3,7 @@ const https = require("https");
 const express = require("express");
 const session = require("express-session");
 const sqlite3 = require("sqlite3").verbose();
-const MemoryStore = require("memorystore")(session);
+const FileStore = require("session-file-store")(session);
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -12,6 +12,7 @@ const port = process.env.PORT || 5000;
 const DB_PATH = "./sqlite/Models_R_US.db";
 const GCP_KEY = "AIzaSyBKfzDUkQK111j6lj1UV_fgAEV64IKSxdA";
 const db = new sqlite3.Database(DB_PATH);
+const fileStoreOptions = {};
 
 // Testing middleware for url mapping route:  http://host:port/Test?x=123
 app.use("/Test", function (req, res) {
@@ -32,12 +33,9 @@ app.use(
 	// 	saveUninitialized: true,
 	// })
 	session({
-		cookie: { maxAge: 86400000 },
-		store: new MemoryStore({
-			checkPeriod: 86400000, // prune expired entries every 24h
-		}),
-		resave: false,
+		store: new FileStore(fileStoreOptions),
 		secret: "keyboard cat",
+		resave: true,
 		saveUninitialized: true,
 	})
 );
