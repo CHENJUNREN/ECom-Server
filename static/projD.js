@@ -1,5 +1,5 @@
-const port = 37045;
-const url = "http://red.eecs.yorku.ca";
+const port = 5000;
+const url = "http://localhost";
 const CATALOG_URL = url + ":" + port + "/Catalog?";
 const LIST_URL = url + ":" + port + "/List?id=";
 const QUOTE_URL = url + ":" + port + "/Quote?id=";
@@ -20,7 +20,7 @@ function doAjax(address, handler) {
 		if (http.readyState == 4 && http.status == 200) {
 			handler(http.responseText);
 		}
-	}
+	};
 	http.open("GET", address, true);
 	http.send();
 }
@@ -34,7 +34,7 @@ function show(v, param) {
 
 	// record current view id, if current view = previous view, remove the duplicate
 	historyView.push(v);
-	if (historyView.length > 1 && historyView[historyView.length-2] == v) {
+	if (historyView.length > 1 && historyView[historyView.length - 2] == v) {
 		historyView.pop();
 	}
 
@@ -43,7 +43,8 @@ function show(v, param) {
 		document.getElementById("backButton").style.display = "none";
 		doAjax(CATALOG_URL, catalogPopulate);
 	} else if (v == "categoryView") {
-		document.getElementById("categoryTitle").innerText = "Category: " + param.categoryName;
+		document.getElementById("categoryTitle").innerText =
+			"Category: " + param.categoryName;
 		doAjax(LIST_URL + param.categoryId, categoryPopulate);
 	} else if (v == "productView") {
 		doAjax(QUOTE_URL + param.productId, productPopulate);
@@ -65,7 +66,7 @@ function addToCart() {
 		name: name,
 		id: id,
 		price: price,
-		qty: 1
+		qty: 1,
 	});
 }
 
@@ -78,7 +79,7 @@ function updateItemInCart(name, id, price) {
 		name: name,
 		id: id,
 		price: price,
-		qty: increment
+		qty: increment,
 	});
 }
 
@@ -103,10 +104,10 @@ function catalogPopulate(res) {
 		a.onclick = function () {
 			show("categoryView", {
 				categoryName: e.name,
-				categoryId: e.id
+				categoryId: e.id,
 			});
 		};
-		a.className = 'list-group-item list-group-item-action';
+		a.className = "list-group-item list-group-item-action";
 		a.innerText = e.name;
 		div.appendChild(a);
 	});
@@ -121,10 +122,10 @@ function categoryPopulate(res) {
 		a = document.createElement("a");
 		a.onclick = function () {
 			show("productView", {
-				productId: e.id
+				productId: e.id,
 			});
-		}
-		a.className = 'list-group-item list-group-item-action';
+		};
+		a.className = "list-group-item list-group-item-action";
 		a.innerText = e.name;
 		div.appendChild(a);
 	});
@@ -152,7 +153,8 @@ function productPopulate(res) {
 	sub_div.appendChild(span);
 
 	let sub_header = document.createElement("h3");
-	sub_header.className = "card-subtitle mt-2 mb-3 text-muted font-weight-bold";
+	sub_header.className =
+		"card-subtitle mt-2 mb-3 text-muted font-weight-bold";
 	sub_header.innerHTML = "Price: " + product.msrp;
 	sub_header.id = "product_price";
 	sub_div.appendChild(sub_header);
@@ -193,7 +195,7 @@ function cartPopulate(res) {
 		input.value = item.qty;
 		let btn = document.createElement("button");
 		btn.className = "btn btn-primary";
-		btn.onclick = function() {
+		btn.onclick = function () {
 			updateItemInCart(item.name, item.id, item.price);
 		};
 		btn.innerHTML = "Update";

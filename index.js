@@ -3,6 +3,7 @@ const https = require("https");
 const express = require("express");
 const session = require("express-session");
 const sqlite3 = require("sqlite3").verbose();
+const MemoryStore = require("memorystore")(session);
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -31,10 +32,13 @@ app.use(
 	// 	saveUninitialized: true,
 	// })
 	session({
-		secret: "mine",
+		cookie: { maxAge: 86400000 },
+		store: new MemoryStore({
+			checkPeriod: 86400000, // prune expired entries every 24h
+		}),
 		resave: false,
+		secret: "keyboard cat",
 		saveUninitialized: true,
-		cookie: { secure: true },
 	})
 );
 
