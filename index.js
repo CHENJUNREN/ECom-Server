@@ -5,12 +5,12 @@ const session = require("express-session");
 const sqlite3 = require("sqlite3").verbose();
 
 const app = express();
-const db = new sqlite3.Database(DB_PATH);
 const port = process.env.PORT || 5000;
 // const home = require('os').homedir;
 // const DB_PATH = home + '/4413/pkg/sqlite/Models_R_US.db';
 const DB_PATH = "./sqlite/Models_R_US.db";
 const GCP_KEY = "AIzaSyBKfzDUkQK111j6lj1UV_fgAEV64IKSxdA";
+const db = new sqlite3.Database(DB_PATH);
 
 // Testing middleware for url mapping route:  http://host:port/Test?x=123
 app.use("/Test", function (req, res) {
