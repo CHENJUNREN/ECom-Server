@@ -3,7 +3,7 @@ const https = require("https");
 const express = require("express");
 const session = require("express-session");
 const sqlite3 = require("sqlite3").verbose();
-const FileStore = require("session-file-store")(session);
+const MemcachedStore = require("connect-memjs")(session);
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -12,16 +12,6 @@ const port = process.env.PORT || 5000;
 const DB_PATH = "./sqlite/Models_R_US.db";
 const GCP_KEY = "AIzaSyBKfzDUkQK111j6lj1UV_fgAEV64IKSxdA";
 const db = new sqlite3.Database(DB_PATH);
-const fileStoreOptions = {};
-
-// Testing middleware for url mapping route:  http://host:port/Test?x=123
-app.use("/Test", function (req, res) {
-	res.writeHead(200, {
-		"Content-Type": "text/html",
-	});
-	res.write("Hello ... this is EECS4413/Fall19 Tester! ");
-	res.end("You sent me: " + req.query.x);
-});
 
 app.set("trust proxy", 1);
 // app.enable("trust proxy");
@@ -33,10 +23,13 @@ app.use(
 	// 	saveUninitialized: true,
 	// })
 	session({
-		store: new FileStore(fileStoreOptions),
-		secret: "keyboard cat",
-		resave: true,
-		saveUninitialized: true,
+		store: new MemcachedStore({
+			servers: [process.env.MEMCACHIER_SERVERS],
+			prefix: "_session_",
+		}),
+		secret: "mine",
+		resave: "false",
+		saveUninitialized: "false",
 	})
 );
 
@@ -44,6 +37,15 @@ app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Credentials", true);
 	res.header("Access-Control-Allow-Origin", req.headers.origin);
 	next();
+});
+
+// Testing middleware for url mapping route:  http://host:port/Test?x=123
+app.use("/Test", function (req, res) {
+	res.writeHead(200, {
+		"Content-Type": "text/html",
+	});
+	res.write("Hello ... this is EECS4413/Fall19 Tester! ");
+	res.end("You sent me: " + req.query.x);
 });
 
 // http://localhost:8000/GeoNode?lat=43.759313&lon=-79.409071

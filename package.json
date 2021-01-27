@@ -4,12 +4,12 @@
   "description": "projC",
   "main": "index.js",
   "dependencies": {
+    "connect-memjs": "^0.2.1",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.17.0",
     "jshint": "^2.10.2",
     "less": "^3.10.3",
-    "session-file-store": "^1.5.0",
     "sqlite3": "^4.1.0",
     "typescript": "^3.6.4",
     "underscore": "^1.9.1"
