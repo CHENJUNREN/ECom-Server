@@ -31,10 +31,7 @@ app.use(
 		resave: "false",
 		saveUninitialized: "false",
 		cookie: {
-			httpOnly: false,
-			maxAge: null,
-			// allow the cookie to be sent via HTTP ("true" means "HTTPS only)
-			secure: false,
+			secure: true,
 			sameSite: "none",
 		},
 	})
